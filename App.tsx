@@ -1,30 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Switch} from 'react-native';
-import { ThemeContext } from './src/components/context/ThemeContext';
+import { StyleSheet, Text, SafeAreaView, Switch} from 'react-native';
+import { ThemeContext } from './src/Context/ThemeContext';
 import { useState } from 'react';
+import KeyBoard from './src/components/KeyBoard';
+import { colors } from './src/styles/Colors';
 
 export default function App() {
 
   const [theme, setTheme] = useState("light");
   return (
     <ThemeContext.Provider value={theme}>
-    <View style={theme === 'light'? styles.container :  styles.dark_theme}>
+    <SafeAreaView style={theme === 'light'? styles.container :  [styles.container, {backgroundColor: 'black'}]}>
       <Switch value={theme === 'light'} 
         onValueChange ={() => setTheme(theme === 'light'? 'dark' : 'light')} />
-    </View>
+        <KeyBoard />
+    </SafeAreaView>
     </ThemeContext.Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    flex: 1,
+    backgroundColor: colors.light,
     alignItems: 'center',
-    minheight: '100vh'
+    justifyContent: 'flex-start',
   },
-  dark_theme: {
-    backgroundColor: '#000',
-    alignItems: 'center',
-    minHeight: '100vh'
-  }
 });
